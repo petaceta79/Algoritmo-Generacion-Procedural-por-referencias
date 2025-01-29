@@ -201,6 +201,7 @@ int main()
     // Creacion del mapa
     Matriz Mapa(alto, vector<double>(ancho, -1));
     PuntosPrincipales = annadirNumIniciales(Mapa, seed); // Los puntos principales para el algoritmo (Con los valores ya asignados en la matriz)
+    //annadirPuntoPrincipal(Mapa, PuntosPrincipales, "x", "y", "valor[0,1]"); por si se desea annadir a mano (no hace falta utilizar annadirNumIniciales)
     rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
     
     // Representacion
