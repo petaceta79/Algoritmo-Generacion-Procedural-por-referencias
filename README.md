@@ -28,4 +28,4 @@ Finalmente, comprobamos que el algoritmo funciona mejor en cuadrículas de peque
 <img src="ejemplos/3D(100x100)1.png" width="400" height="400"/> <img src="ejemplos/3D(20x20).png" width="400" height="400"/>
 
 Como se puede observar, es mucho más fluido que estos, por ejemplo, que son generados aleatoriamente:
-<img src="ejemplos/Random1.png" width="400" height="400"/>
+<img src="ejemplos/Random1.png" width="600" height="400"/>
