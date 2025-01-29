@@ -30,7 +30,10 @@ void escribeMatrizCMD(Matriz &M) {
     
     for (int i = 0; i < f; ++i) {
         for (int j = 0; j < c; ++j) {
-            cout << M[i][j] << "   ";
+            if (M[i][j] == -1) {
+                cout << "nada" << "   ";
+            }
+            else cout << M[i][j] << "   ";
         }
         cout << endl;
     }
@@ -62,7 +65,8 @@ void actSeed(int &seed) {
 }
 // Añade utilizando una seed los numeros iniciales ya asignados 
 // Devuelve un vector con los puntos importantes
-vector<Punto> annadirNumIniciales(Matriz &M, int &seed) {
+// PuntosPinrciMax = El maximo de puntos principales
+vector<Punto> annadirNumIniciales(Matriz &M, int &seed, int PuntosPrinciMax) {
     int f = M.size() - 1;
     int c = M[0].size() - 1;
     
@@ -71,8 +75,9 @@ vector<Punto> annadirNumIniciales(Matriz &M, int &seed) {
 
     actSeed(seed);
 
-    double porcentajePuntos = (numRandomSeedCompresed(seed) * 20) + 10;
-    int numPuntos = ceil(2 + ((f + c) / (2 * porcentajePuntos)));
+    double porcentajePuntos = numRandomSeedCompresed(seed);
+    int numPuntos = ceil(PuntosPrinciMax * porcentajePuntos);
+    if (numPuntos < 2) numPuntos = 2;
     actSeed(seed);
 
     for (int i = 0; i < numPuntos; ++i) {
@@ -186,30 +191,212 @@ void GeneraMapaDeCalorPPM(const string &filename, const vector< vector<double> >
 
     file.close();
 }
+// crea una casilla sola
+// ancho = lo que mide horizontalmente
+// alto = lo que mide verticalmente
+// seed = el valor del cual parten los numeros pseudoaleatorios 
+// PuntsoPrinciMax = El maximo de Puntos principales
+Matriz CrearUnaCasillaRandom(int ancho, int alto, int seed, int PuntosPrinciMax ) {    
+    // Creacion del mapa
+    Matriz Mapa(alto, vector<double>(ancho, -1));
+    vector<Punto> PuntosPrincipales;
+    PuntosPrincipales = annadirNumIniciales(Mapa, seed, PuntosPrinciMax); // Los puntos principales para el algoritmo (Con los valores ya asignados en la matriz)
+    rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
+
+    return Mapa;
+}
+// crea una casilla con los puntos personalizados
+// ancho = lo que mide horizontalmente
+// alto = lo que mide verticalmente
+// seed = el valor del cual parten los numeros pseudoaleatorios 
+// modificar el script para annadir los puntos deseados
+Matriz CreaUnaCasillaPersonalizada(int ancho, int alto, int seed) {    
+    // Creacion del mapa
+    Matriz Mapa(alto, vector<double>(ancho, -1));
+    vector<Punto> PuntosPrincipales;
+
+    //annadirPuntoPrincipal(Mapa, PuntosPrincipales, "x", "y", "valor[0,1]"); por si se desea annadir a mano (no hace falta utilizar annadirNumIniciales)
+    //annadirPuntoPrincipal(Mapa, PuntosPrincipales, 5, 4, 0.90); Ejemplo annade un punto en el x=5 y=4 de valor 0.90 
+    //annadirPuntoPrincipal(Mapa, PuntosPrincipales, 1, 0, 0.15); Ejemploannade un punto en el x=1 y=0 valor 0.15
+    // la x y y maximas son uno menos pues empieza en el 0.
+
+    /*annadirPuntoPrincipal(Mapa, PuntosPrincipales, 0, 0, 0); // Una figura
+    annadirPuntoPrincipal(Mapa, PuntosPrincipales, 0, 29, 1);
+    annadirPuntoPrincipal(Mapa, PuntosPrincipales, 29, 0, 1);
+    annadirPuntoPrincipal(Mapa, PuntosPrincipales, 29, 29, 0);
+    annadirPuntoPrincipal(Mapa, PuntosPrincipales, 15, 15, 0);*/
+
+
+
+
+
+    rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
+
+    return Mapa;
+}
+// Funciona igual que CrearUnaCasillaRandom pero dando ya un vector con algunos puntos y sus valores 
+Matriz CrearUnaCasillaRandomConVector(int ancho, int alto, int seed, int PuntosPrinciMax, vector<Punto> &PuntsoPrincipales, vector<double> &ValorPUntosPrincipales) {
+    // Creacion del mapa
+    Matriz Mapa(alto, vector<double>(ancho, -1));
+    vector<Punto> PuntosPrincipales;
+
+    PuntosPrincipales = annadirNumIniciales(Mapa, seed, PuntosPrinciMax); // Los puntos principales para el algoritmo (Con los valores ya asignados en la matriz)
+
+    int numPuntosAntes = PuntsoPrincipales.size();
+    for (int i = 0; i < numPuntosAntes; ++i) {
+        annadirPuntoPrincipal(Mapa, PuntosPrincipales, PuntsoPrincipales[i].x, PuntsoPrincipales[i].y, ValorPUntosPrincipales[i]);
+    }
+
+    //escribeMatrizCMD(Mapa); debug
+
+    rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
+
+    //escribeMatrizCMD(Mapa); debug
+    //cout << "---" << endl; debug
+
+    return Mapa;
+}
+// Fusiona la matriz grande y la pequenna segun
+// ancho = el ancho de la pequenna (la grande es siempre mas grande)
+// alto = alto de la pequenna
+// xInicio = cuantas Casillas hay detras de esta horizontalmente
+// yInicio = cuantas Casillas hay detras de esta verticalmente
+void sustituirMatriz(Matriz &Grande, Matriz &Pequenna, int ancho, int alto, int xInicio, int yInicio) {
+    for (int x = 0; x < ancho; ++x) {
+        for (int y = 0; y < alto; ++y) {
+            Grande[y + (yInicio * alto)][x + (xInicio * ancho)] = Pequenna[y][x];
+        }
+    }
+}
+// Crea un mapa relacionando cada una de sus casillas pero siendo independientes a la vez
+// casillasHorizon = numero de casillas horizontales
+// casillasVertical = numero de casillas verticales
+// anchoCasilla = lo que mide horizontalmente
+// altoCasilla = lo que mide verticalmente
+// seed = el valor del cual parten los numeros pseudoaleatorios 
+// PuntsoPrinciMax = El maximo de Puntos principales, sin contar los annadidos para continuar la otra casilla
+// NumeroInfluenciaCasillasLaterales = cada cuanto coge un valor de la anterior casilla 
+Matriz CrearMapaRandom(int NumeroInfluenciaCasillasLaterales, int casillasHorizon, int casillasVertical, int anchoCasilla, int altoCasilla, int seed, int PuntosPrinciMax) {
+    Matriz Mapa(casillasVertical * altoCasilla, vector<double>(casillasHorizon * anchoCasilla, -1));
+    
+    for (int i = 0; i < casillasVertical; ++i) {
+        for (int j = 0; j < casillasHorizon; ++j) {
+            vector<Punto> PuntosAAnnadir(0);
+            vector<double> ValorDeLosPuntos(0);    
+
+            // Si arriba o a la izquerda hay alguna otra casilla se annaden valores para nivelarlo
+            if (i > 0) { // hay arriba
+                for (int a = 0; a < anchoCasilla; a += NumeroInfluenciaCasillasLaterales) {
+                    Punto PuntoNuevo;
+                    PuntoNuevo.x = a;
+                    PuntoNuevo.y = 0;
+                    PuntosAAnnadir.push_back(PuntoNuevo);
+                    ValorDeLosPuntos.push_back(Mapa[(altoCasilla * i) - 1][a + (anchoCasilla * j)]);
+                }
+            }
+            if (j > 0) { // hay a la izquierda
+                for (int a = 0; a < altoCasilla; a += NumeroInfluenciaCasillasLaterales) {
+                    Punto PuntoNuevo;
+                    PuntoNuevo.x = 0;
+                    PuntoNuevo.y = a;
+                    PuntosAAnnadir.push_back(PuntoNuevo);
+                    ValorDeLosPuntos.push_back(Mapa[(altoCasilla * i) + a][(anchoCasilla * j) - 1]);
+                }
+            }
+
+
+            Matriz casillaMomentania = CrearUnaCasillaRandomConVector(anchoCasilla, altoCasilla, seed, PuntosPrinciMax, PuntosAAnnadir, ValorDeLosPuntos);
+
+            sustituirMatriz(Mapa, casillaMomentania, anchoCasilla, altoCasilla, j, i);
+
+            actSeed(seed);
+        }
+    }
+
+    return Mapa;
+}
+// Analiza todos los valores contiguos y resta/suma la diferencia entre el factorReductor para aproximarlos
+// factorReductor = se resta a cada casilla, diferencia/factorReductor, Cuanto mas grande es menos le resta 
+// diffMax = es la diferencia maxima apartir de la cual se aplica el filtro
+// vueltasDeSuavizado = cuantas vuletas minimo hace de suavizar todo 
+void filtroReducirPorDiferencias(Matriz &M, float factorReductor, float diffMax, int vueltasDeSuavizado) {
+    int f = M.size();
+    int c = M[0].size();
+
+    bool minimoUnCanvio = false;
+
+    do {
+        minimoUnCanvio = false;
+        for (int i = 0; i < f; ++i) {
+            for (int j = 0; j < c; ++j) {           
+                if (i < (f - 1))  {
+                    double difi = abs(M[i][j] - M[i + 1][j]);
+                    if (difi > diffMax) {
+                        if (M[i][j] < M[i + 1][j]) {
+                            M[i][j] += difi / factorReductor;
+                            M[i + 1][j] -= difi / factorReductor;
+                        }
+                        else {
+                            M[i][j] -= difi / factorReductor;
+                            M[i + 1][j] += difi / factorReductor;
+                        }
+                        minimoUnCanvio = true;
+                    }   
+                }
+                if (j < (c - 1) )  {
+                    double difj = abs(M[i][j] - M[i][j + 1]);
+                    if (difj > diffMax) {
+                        if (M[i][j] < M[i][j + 1]) {
+                            M[i][j] += difj / factorReductor;
+                            M[i][j + 1] -= difj / factorReductor;
+                        }
+                        else {
+                            M[i][j] -= difj / factorReductor;
+                            M[i][j + 1] += difj / factorReductor;
+                        }
+                        minimoUnCanvio = true;
+                    }
+                }
+            }
+        }
+        --vueltasDeSuavizado;
+    } while ((minimoUnCanvio != 0) && vueltasDeSuavizado > 0);  
+}
+
+
+
 
 
 // Codigo principal
 int main()
 {
-    // Valores principales
-    int ancho = 15; // modificables
+    // Valores principales modificables
+    int ancho = 15; 
     int alto = 15;
-    int seed = time(0); // preferiblemente grande
+    int MaximoPuntosPrincipales = 4;
+    int seed = 245243124; // preferiblemente grande
+    // solo para cuando creas un mapa con varias casillas
+    int NumeroCasillasHorizonotales = 3; 
+    int NumeroCasillasVerticales = 3;
+    int NumeroInfluenciaCasillasLaterales = 5; // cada cuanto mira un bloque de las casillas contiguas 
 
-    vector<Punto> PuntosPrincipales;
-    
-    // Creacion del mapa
-    Matriz Mapa(alto, vector<double>(ancho, -1));
-    PuntosPrincipales = annadirNumIniciales(Mapa, seed); // Los puntos principales para el algoritmo (Con los valores ya asignados en la matriz)
-    //annadirPuntoPrincipal(Mapa, PuntosPrincipales, "x", "y", "valor[0,1]"); por si se desea annadir a mano (no hace falta utilizar annadirNumIniciales)
-    rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
-    
+
+    // Generar mapa
+    //Matriz Mapa = CrearUnaCasillaRandom(ancho, alto, seed, MaximoPuntosPrincipales);
+    //Matriz Mapa = CreaUnaCasillaPersonalizada(ancho, alto, seed); // modificar funcion para annadir los deseados 
+    Matriz Mapa = CrearMapaRandom(NumeroInfluenciaCasillasLaterales, NumeroCasillasHorizonotales, NumeroCasillasVerticales, ancho, alto, seed, MaximoPuntosPrincipales);
+
+    // Filtro suavizador (cuando hay mucha diferencia reduce la distancia)
+    filtroReducirPorDiferencias(Mapa, 2, 0.15, 200);
+
+
     // Representacion
     //debugPuntosPrincipales(Mapa, PuntosPrincipales);
     //escribeMatrizCMD(Mapa); 
     GeneraMapaDeCalorPPM("MapaDeCalor.ppm", Mapa);
 
     cout << endl;
+    cout << "Seed: " << seed << endl;
     cout << "Finalizado" << endl;
 
 }
