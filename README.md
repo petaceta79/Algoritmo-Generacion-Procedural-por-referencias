@@ -48,3 +48,6 @@ Se observa que el algoritmo es más fluido en comparación con los generados ale
 Así se ven los mapas de calor:
 
 <img src="ejemplos/MapaDeCalor(50x50)2.png" width="400" height="400"/> <img src="ejemplos/MapaDeCalor(250x250)1.png" width="400" height="400"/>
+
+# Como utilizarlo 
+En poco
