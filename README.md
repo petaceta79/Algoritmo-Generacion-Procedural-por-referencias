@@ -1,4 +1,4 @@
-Descripción del algoritmo (el codigo es AlgoritmoGenProcedural/AlgoritmoGenProcedural.cc)
+Descripción del algoritmo 
 
 El algoritmo se ejecuta en un espacio bidimensional, donde se posicionan varios puntos principales. 
 Estos puntos principales deben cumplir con dos condiciones: deben ser al menos dos puntos y tener valores diferentes, de lo contrario sería toda la malla del mismo color. La matriz puede ser de cualquier tamaño, y la cantidad de puntos principales, así como sus valores entre [0,1], pueden ser ajustados según se desee.
@@ -8,7 +8,7 @@ A continuación, el algoritmo calcula el valor de todas las casillas que no son 
 La suma de todos los grados de influencia debe ser igual a 1, ya que corresponde a un porcentaje.
 
 El grado de influencia de un punto principal específico sobre una casilla se calcula de la siguiente manera:
-1. Se obtiene la distancia de Manhattan entre el punto principal y la casilla.
+1. Se obtiene la distancia entre el punto principal y la casilla.
 2. La distancia se invierte, de modo que los puntos más cercanos tengan una mayor influencia.
 3. El valor de influencia de un punto principal se calcula dividiendo la distancia invertida entre la suma total de las distancias invertidas de todos los puntos principales.
 
