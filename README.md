@@ -46,4 +46,5 @@ Se observa que el algoritmo es más fluido en estos casos en comparación con lo
 <img src="ejemplos/Random1.png" width="400" height="400"/> <img src="ejemplos/Random2.png" width="400" height="400"/>
 
 Así se ven los mapas de calor:
+
 <img src="ejemplos/MapaDeCalor(50x50)2.png" width="400" height="400"/> <img src="ejemplos/MapaDeCalor(250x250)1.png" width="400" height="400"/>
