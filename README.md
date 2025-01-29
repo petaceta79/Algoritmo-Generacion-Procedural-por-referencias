@@ -12,11 +12,13 @@ El grado de influencia de un punto principal específico sobre una casilla se ca
 2. La distancia se invierte, de modo que los puntos más cercanos tengan una mayor influencia.
 3. El valor de influencia de un punto principal se calcula dividiendo la distancia invertida entre la suma total de las distancias invertidas de todos los puntos principales.
 
+Fórmula: 
 distanciaInvertida = (1 / distancia1)
 
 distanciaInvertidaTotal = distanciaInvertida1 + distanaciaInvertida2 + ...
 
 Valor de x casilla = valorCasillaPrincipal1 * (distanciaInvertida1 / distanciaInvertidaTotal) + valorCasillaPrincipal2 * (distanciaInvertida2 / distanciaInvertidaTotal) + ... 
+
 
 
 El valor final de la casilla es una combinación ponderada de las influencias de todos los puntos principales, considerando su distancia a la casilla en cuestión.
