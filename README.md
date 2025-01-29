@@ -41,7 +41,7 @@ El algoritmo funciona de manera más eficiente en cuadrículas de pequeño tama�
 
 <img src="ejemplos/3D(100x100)1.png" width="400" height="400"/> <img src="ejemplos/3D(20x20).png" width="400" height="400"/>
 
-Se observa que el algoritmo es más fluido en estos casos en comparación con los generados aleatoriamente:
+Se observa que el algoritmo es más fluido en comparación con los generados aleatoriamente:
 
 <img src="ejemplos/Random1.png" width="400" height="400"/> <img src="ejemplos/Random2.png" width="400" height="400"/>
 
