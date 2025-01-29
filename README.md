@@ -44,3 +44,6 @@ El algoritmo funciona de manera más eficiente en cuadrículas de pequeño tama�
 Se observa que el algoritmo es más fluido en estos casos en comparación con los generados aleatoriamente:
 
 <img src="ejemplos/Random1.png" width="400" height="400"/> <img src="ejemplos/Random2.png" width="400" height="400"/>
+
+Así se ven los mapas de calor:
+<img src="ejemplos/MapaDeCalor(50x50)2.png" width="400" height="400"/> <img src="ejemplos/MapaDeCalor(250x250)1.png" width="400" height="400"/>
