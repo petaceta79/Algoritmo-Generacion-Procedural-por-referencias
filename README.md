@@ -39,10 +39,8 @@ El código genera un mapa de calor en formato `.ppm`, lo que permite visualizar 
 
 El algoritmo funciona de manera más eficiente en cuadrículas de pequeño tamaño. Algunos ejemplos de la representación 3D generada en cuadrículas de tamaño 100x100 y 20x20:
 
-![Ejemplo 1 (100x100)](ejemplos/3D(100x100)1.png)
-![Ejemplo 2 (20x20)](ejemplos/3D(20x20).png)
+<img src="ejemplos/3D(100x100)1.png" width="400" height="400"/> <img src="ejemplos/3D(20x20).png" width="400" height="400"/>
 
 Se observa que el algoritmo es más fluido en estos casos en comparación con los generados aleatoriamente:
 
-![Ejemplo aleatorio 1](ejemplos/Random1.png)
-![Ejemplo aleatorio 2](ejemplos/Random2.png)
+<img src="ejemplos/Random1.png" width="400" height="400"/> <img src="ejemplos/Random2.png" width="400" height="400"/>
