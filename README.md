@@ -1,4 +1,4 @@
-Descripción del algoritmo
+Descripción del algoritmo (el codigo es AlgoritmoGenProcedural/AlgoritmoGenProcedural.cc)
 
 El algoritmo se ejecuta en un espacio bidimensional, donde se posicionan varios puntos principales. 
 Estos puntos principales deben cumplir con dos condiciones: deben ser al menos dos puntos y tener valores diferentes, de lo contrario sería toda la malla del mismo color. La matriz puede ser de cualquier tamaño, y la cantidad de puntos principales, así como sus valores entre [0,1], pueden ser ajustados según se desee.
