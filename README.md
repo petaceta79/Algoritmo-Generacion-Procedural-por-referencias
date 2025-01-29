@@ -22,3 +22,4 @@ De este modo, las casillas dependen de la distancia a los puntos principales, y 
 Finalmente, el proceso de asignación de los puntos principales es clave. Estos puntos pueden ser asignados manualmente o mediante un sistema automatizado. En este caso, se utiliza un sistema basado en semillas, donde a partir de un número dado, se calcula cuántos puntos añadir, así como sus valores y posiciones.
 
 En principio, el código genera un mapa de calor con formato .ppm, el cual ayuda a interpretarlo.
+Gracias al script en Python 'Viewer3D.py' podemos generar la representación 3D de la imagen.ppm(MapaDeCalor.ppm).
