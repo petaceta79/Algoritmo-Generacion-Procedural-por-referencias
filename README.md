@@ -1,36 +1,48 @@
-Descripción del algoritmo 
+# Descripción del Algoritmo
 
-El algoritmo se ejecuta en un espacio bidimensional, donde se posicionan varios puntos principales. 
-Estos puntos principales deben cumplir con dos condiciones: deben ser al menos dos puntos y tener valores diferentes, de lo contrario sería toda la malla del mismo color. La matriz puede ser de cualquier tamaño, y la cantidad de puntos principales, así como sus valores entre [0,1], pueden ser ajustados según se desee.
+El algoritmo se ejecuta en un espacio bidimensional, donde se posicionan varios puntos principales. Estos puntos deben cumplir con dos condiciones: deben ser al menos dos puntos y tener valores diferentes; de lo contrario, la malla estaría completamente del mismo color. La matriz puede tener cualquier tamaño, y la cantidad de puntos principales, así como sus valores en el rango [0, 1], pueden ser ajustados según se desee.
 
-A continuación, el algoritmo calcula el valor de todas las casillas que no son puntos principales, utilizando una fórmula matemática. Esta fórmula define el valor de cada casilla como la suma de los valores de los puntos principales multiplicados por su respectivo grado de influencia.
+## Funcionamiento del algoritmo
 
-La suma de todos los grados de influencia debe ser igual a 1, ya que corresponde a un porcentaje.
+1. **Cálculo de los valores de las casillas**  
+   El algoritmo calcula el valor de todas las casillas que no son puntos principales, utilizando una fórmula matemática. La fórmula asigna el valor de cada casilla como la suma de los valores de los puntos principales multiplicados por su respectivo grado de influencia.
 
-El grado de influencia de un punto principal específico sobre una casilla se calcula de la siguiente manera:
-1. Se obtiene la distancia entre el punto principal y la casilla.
-2. La distancia se invierte, de modo que los puntos más cercanos tengan una mayor influencia.
-3. El valor de influencia de un punto principal se calcula dividiendo la distancia invertida entre la suma total de las distancias invertidas de todos los puntos principales.
+2. **Grado de influencia**  
+   La suma de todos los grados de influencia debe ser igual a 1, ya que corresponde a un porcentaje.
 
-Fórmula: 
-distanciaInvertida = (1 / distancia1)
+   El grado de influencia de un punto principal sobre una casilla se calcula de la siguiente manera:
+   1. Se obtiene la distancia entre el punto principal y la casilla.
+   2. La distancia se invierte, de modo que los puntos más cercanos tengan una mayor influencia.
+   3. El valor de influencia de un punto principal se calcula dividiendo la distancia invertida entre la suma total de las distancias invertidas de todos los puntos principales.
 
-distanciaInvertidaTotal = distanciaInvertida1 + distanaciaInvertida2 + ...
+   **Fórmulas:**
+   - Distancia invertida:  
+     `distanciaInvertida = (1 / distancia1)`
+   
+   - Distancia invertida total:  
+     `distanciaInvertidaTotal = distanciaInvertida1 + distanciaInvertida2 + ...`
+   
+   - Valor de una casilla:  
+     `Valor de x casilla = valorCasillaPrincipal1 * (distanciaInvertida1 / distanciaInvertidaTotal) + valorCasillaPrincipal2 * (distanciaInvertida2 / distanciaInvertidaTotal) + ...`
 
-Valor de x casilla = valorCasillaPrincipal1 * (distanciaInvertida1 / distanciaInvertidaTotal) + valorCasillaPrincipal2 * (distanciaInvertida2 / distanciaInvertidaTotal) + ... 
+   El valor final de la casilla es una combinación ponderada de las influencias de todos los puntos principales, considerando su distancia a la casilla en cuestión. De este modo, las casillas dependen de la distancia a los puntos principales, y su valor refleja la influencia de dichos puntos según la fórmula descrita.
 
+## Asignación de puntos principales
 
+La asignación de los puntos principales es clave. Estos puntos pueden ser asignados manualmente o mediante un sistema automatizado. En este caso, se utiliza un sistema basado en semillas, donde a partir de un número dado, se calcula cuántos puntos añadir, así como sus valores y posiciones.
 
-El valor final de la casilla es una combinación ponderada de las influencias de todos los puntos principales, considerando su distancia a la casilla en cuestión.
-De este modo, las casillas dependen de la distancia a los puntos principales, y su valor refleja la influencia de dichos puntos según la fórmula descrita.
+## Generación del mapa de calor
 
-Finalmente, el proceso de asignación de los puntos principales es clave. Estos puntos pueden ser asignados manualmente o mediante un sistema automatizado. En este caso, se utiliza un sistema basado en semillas, donde a partir de un número dado, se calcula cuántos puntos añadir, así como sus valores y posiciones.
+El código genera un mapa de calor en formato `.ppm`, lo que permite visualizar los resultados de forma clara. Además, gracias al script Python `Viewer3D.py`, es posible generar la representación 3D de la imagen `.ppm` (por ejemplo, `MapaDeCalor.ppm`).
 
-En principio, el código genera un mapa de calor con formato .ppm, el cual ayuda a interpretarlo.
-Gracias al script en Python 'Viewer3D.py' podemos generar la representación 3D de la imagen.ppm(MapaDeCalor.ppm).
+## Ejemplos
 
-Finalmente, comprobamos que el algoritmo funciona mejor en cuadrículas de pequeño tamaño, unos ejemplos:
-<img src="ejemplos/3D(100x100)1.png" width="400" height="400"/> <img src="ejemplos/3D(20x20).png" width="400" height="400"/>
+El algoritmo funciona de manera más eficiente en cuadrículas de pequeño tamaño. Algunos ejemplos de la representación 3D generada en cuadrículas de tamaño 100x100 y 20x20:
 
-Como se puede observar, es mucho más fluido que estos, por ejemplo, que son generados aleatoriamente:
-<img src="ejemplos/Random1.png" width="400" height="400"/> <img src="ejemplos/Random2.png" width="400" height="400"/>
+![Ejemplo 1 (100x100)](ejemplos/3D(100x100)1.png)
+![Ejemplo 2 (20x20)](ejemplos/3D(20x20).png)
+
+Se observa que el algoritmo es más fluido en estos casos en comparación con los generados aleatoriamente:
+
+![Ejemplo aleatorio 1](ejemplos/Random1.png)
+![Ejemplo aleatorio 2](ejemplos/Random2.png)
