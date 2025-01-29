@@ -3,6 +3,9 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <cstdlib>  // Para srand() y rand()
+#include <ctime>    // Para time()
+#include <cmath>
 
 using namespace std;
 
@@ -43,18 +46,46 @@ void annadirPuntoPrincipal(Matriz &M, vector<Punto> &PuntosImp, int x, int y, do
     puntoNuevo.y = y;
     PuntosImp.push_back(puntoNuevo);
 } 
-
+// Dado una seed se genera un numero pseudoaleatorio
+int numRandomSeed(int seed) {
+    srand(seed);
+    return rand();
+}
+// Dado una seed se genera un numeor pseudoaleatorio [0,1]
+double numRandomSeedCompresed(int seed) {
+    return (numRandomSeed(seed) % 10000) / 10000.0;
+}
+// Actualiza a semilla a otra nueva basada en la anterior
+void actSeed(int &seed) {
+    seed = ((seed * numRandomSeed(seed + 1)) % (200000 + int((50000) * numRandomSeedCompresed(seed + 3)))); 
+}
 // Añade utilizando una seed los numeros iniciales ya asignados 
 // Devuelve un vector con los puntos importantes
-vector<Punto> annadirNumIniciales(Matriz &M, int seed) {
+vector<Punto> annadirNumIniciales(Matriz &M, int &seed) {
     int f = M.size() - 1;
     int c = M[0].size() - 1;
     
     vector<Punto> PuntosImpor;
-    annadirPuntoPrincipal(M, PuntosImpor, 0, 0, 1);
-    annadirPuntoPrincipal(M, PuntosImpor, c, 0, 0.15);
-    annadirPuntoPrincipal(M, PuntosImpor, 0, f, 0.5);
-    annadirPuntoPrincipal(M, PuntosImpor, c, f, 0.25);
+    // annadirPuntoPrincipal(M, PuntosImpor, 0, 0, 1); Para añadir puntos 
+
+    actSeed(seed);
+
+    double porcentajePuntos = (numRandomSeedCompresed(seed) * 20) + 10;
+    int numPuntos = ceil(2 + ((f + c) / (2 * porcentajePuntos)));
+    actSeed(seed);
+
+    for (int i = 0; i < numPuntos; ++i) {
+        int x, y;
+        do {
+            x = c * numRandomSeedCompresed(seed);
+            actSeed(seed);
+            y = f * numRandomSeedCompresed(seed + 1);
+            actSeed(seed);
+        } while (M[y][x] != -1);
+        annadirPuntoPrincipal(M, PuntosImpor, x, y, numRandomSeedCompresed(seed));
+        actSeed(seed);
+        
+    }
 
     return PuntosImpor;
 }
@@ -113,7 +144,12 @@ double valorDeUnPunto(int x, int y, Matriz &M, vector<Punto> &P) {
     
     return result;
 }
-
+void debugPuntosPrincipales(Matriz &M,vector<Punto> &PuntosImpor ) {
+    int numPuntos = PuntosImpor.size();
+    // Debug posicon de los puntos importantes
+    for (int i = 0; i < numPuntos; ++i) cout << PuntosImpor[i].x << ' ' << PuntosImpor[i].y << ' ' << M[PuntosImpor[i].y][PuntosImpor[i].x] << " - ";
+    cout << endl;
+}
 // Dado un mapa con -1, menos x puntos principales y un vector con estos puntos 
 // Devuelve el mapa lleno siguiendo el algoritmo
 void rellenarMapa(Matriz &M, vector<Punto> &P) {
@@ -128,8 +164,6 @@ void rellenarMapa(Matriz &M, vector<Punto> &P) {
         }
     }
 }
-
-
 // Creacion del mapa de calor con .ppm
 void GeneraMapaDeCalorPPM(const string &filename, const vector< vector<double> > &matrix) {
     int rows = matrix.size();
@@ -157,17 +191,19 @@ void GeneraMapaDeCalorPPM(const string &filename, const vector< vector<double> >
 int main()
 {
     // Valores principales
-    int ancho = 1000; // modificables
-    int alto = 1000;
+    int ancho = 30; // modificables
+    int alto = 30;
+    int seed = 123213123; // preferiblemente grande
     vector<Punto> PuntosPrincipales;
     
     // Creacion del mapa
     Matriz Mapa(alto, vector<double>(ancho, -1));
-    PuntosPrincipales = annadirNumIniciales(Mapa, 1234);
-    rellenarMapa(Mapa, PuntosPrincipales);
+    PuntosPrincipales = annadirNumIniciales(Mapa, seed); // Los puntos principales para el algoritmo (Con los valores ya asignados en la matriz)
+    rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
     
+    // Representacion
+    //debugPuntosPrincipales(Mapa, PuntosPrincipales);
     //escribeMatrizCMD(Mapa); 
-
     GeneraMapaDeCalorPPM("MapaDeCalor.ppm", Mapa);
 
     cout << endl;
