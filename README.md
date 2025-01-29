@@ -25,9 +25,4 @@ En principio, el código genera un mapa de calor con formato .ppm, el cual ayuda
 Gracias al script en Python 'Viewer3D.py' podemos generar la representación 3D de la imagen.ppm(MapaDeCalor.ppm).
 
 Finalmente, comprobamos que el algoritmo funciona mejor en cuadrículas de pequeño tamaño, unos ejemplos:
-
-Algoritmo:
-![Ejemplo](ejemplos/3D(100x100)1.png) ![Ejemplo](ejemplos/3D(20x20).png) 
-
-Random:
-![Ejemplo](ejemplos/Random1.png) 
+<img src="ejemplos/3D(100x100)1.png" width="300" height="200"/>
