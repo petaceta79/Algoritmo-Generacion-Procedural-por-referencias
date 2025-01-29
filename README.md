@@ -23,3 +23,6 @@ Finalmente, el proceso de asignación de los puntos principales es clave. Estos 
 
 En principio, el código genera un mapa de calor con formato .ppm, el cual ayuda a interpretarlo.
 Gracias al script en Python 'Viewer3D.py' podemos generar la representación 3D de la imagen.ppm(MapaDeCalor.ppm).
+
+Finalmente, comprobamos que el algoritmo funciona mejor en cuadrículas de pequeño tamaño, unos ejemplos:
+[https://github.com/petaceta79/Algoritmo-Generacion-Procedural-por-referencias/blob/main/ejemplos/3D(100x100)1.png?raw=true]
