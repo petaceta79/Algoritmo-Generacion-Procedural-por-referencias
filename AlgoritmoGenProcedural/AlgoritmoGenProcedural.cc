@@ -199,6 +199,7 @@ void GeneraMapaDeCalorPPM(const string &filename, const vector< vector<double> >
 // seed = el valor del cual parten los numeros pseudoaleatorios 
 // PuntsoPrinciMax = El maximo de Puntos principales
 Matriz CrearUnaCasillaRandom(int ancho, int alto, int seed, int PuntosPrinciMax ) {    
+    actSeed(seed);
     // Creacion del mapa
     Matriz Mapa(alto, vector<double>(ancho, -1));
     vector<Punto> PuntosPrincipales;
@@ -213,6 +214,7 @@ Matriz CrearUnaCasillaRandom(int ancho, int alto, int seed, int PuntosPrinciMax 
 // seed = el valor del cual parten los numeros pseudoaleatorios 
 // modificar el script para annadir los puntos deseados
 Matriz CreaUnaCasillaPersonalizada(int ancho, int alto, int seed) {    
+    actSeed(seed);
     // Creacion del mapa
     Matriz Mapa(alto, vector<double>(ancho, -1));
     vector<Punto> PuntosPrincipales;
@@ -249,12 +251,12 @@ Matriz CrearUnaCasillaRandomConVector(int ancho, int alto, int seed, int PuntosP
         annadirPuntoPrincipal(Mapa, PuntosPrincipales, PuntsoPrincipales[i].x, PuntsoPrincipales[i].y, ValorPUntosPrincipales[i]);
     }
 
-    //escribeMatrizCMD(Mapa); debug
+    //escribeMatrizCMD(Mapa); //debug
 
     rellenarMapa(Mapa, PuntosPrincipales); // Ejecuta el algorimo
 
-    //escribeMatrizCMD(Mapa); debug
-    //cout << "---" << endl; debug
+    //escribeMatrizCMD(Mapa); //debug
+    //cout << "---" << endl; //debug
 
     return Mapa;
 }
@@ -271,16 +273,18 @@ void sustituirMatriz(Matriz &Grande, Matriz &Pequenna, int ancho, int alto, int 
     }
 }
 // Crea un mapa relacionando cada una de sus casillas pero siendo independientes a la vez
-// casillasHorizon = numero de casillas horizontales
-// casillasVertical = numero de casillas verticales
+// NumeroInfluenciaCasillasLaterales = cada cuanto coge un valor de la anterior casilla 
+// casillasHorizon = numero de casillas horizontales cada casilla
+// casillasVertical = numero de casillas verticales cada casilla
 // anchoCasilla = lo que mide horizontalmente
 // altoCasilla = lo que mide verticalmente
 // seed = el valor del cual parten los numeros pseudoaleatorios 
 // PuntsoPrinciMax = El maximo de Puntos principales, sin contar los annadidos para continuar la otra casilla
-// NumeroInfluenciaCasillasLaterales = cada cuanto coge un valor de la anterior casilla 
 Matriz CrearMapaRandom(int NumeroInfluenciaCasillasLaterales, int casillasHorizon, int casillasVertical, int anchoCasilla, int altoCasilla, int seed, int PuntosPrinciMax) {
     Matriz Mapa(casillasVertical * altoCasilla, vector<double>(casillasHorizon * anchoCasilla, -1));
     
+    actSeed(seed);
+
     for (int i = 0; i < casillasVertical; ++i) {
         for (int j = 0; j < casillasHorizon; ++j) {
             vector<Punto> PuntosAAnnadir(0);
@@ -338,18 +342,10 @@ double calculaMediaAlRededor(Matriz &M, int i, int j) {
 }
 // Asigna el valor segun el factor de reduccion
 double asignarValorSegunReduccion(double val, double avg, int factorReductor) {
-    double result = avg;
-
-    for (int i = 0; i < factorReductor; ++i) {
-        result += val;
-    }
-
-    result /= (factorReductor + 1);
-
-    return result;
+    return (avg + val * factorReductor) / (factorReductor + 1);
 }
 // Analiza todos los valores contiguos y resta/suma la diferencia entre el factorReductor para aproximarlos
-// factorReductor = cuanta importancia tiene el pico al calcular su nuevo valor; cuanto mas mas importancia
+// factorReductor = cuanta importancia tiene el pico al calcular su nuevo valor (cuanto major sea mas importancia)
 // diffMax = es la diferencia maxima apartir de la cual se aplica el filtro
 // vueltasDeSuavizado = cuantas vuletas maximo hace de suavizar 
 void filtroReducirPorDiferencias(Matriz &M, int factorReductor, float diffMax, int vueltasDeSuavizado) {
@@ -377,18 +373,18 @@ void filtroReducirPorDiferencias(Matriz &M, int factorReductor, float diffMax, i
 
 
 
-// Codigo principal
+// Codigo principal (explicacion en el github)
 int main()
 {
     // Valores principales modificables
-    int ancho = 15; 
-    int alto = 15;
+    int ancho = 10; 
+    int alto = 10;
     int MaximoPuntosPrincipales = 4;
-    int seed = time(0); // preferiblemente grande
+    int seed = 86756767; // preferiblemente grande
     // solo para cuando creas un mapa con varias casillas
     int NumeroCasillasHorizonotales = 3; 
     int NumeroCasillasVerticales = 3;
-    int NumeroInfluenciaCasillasLaterales = 5; // cada cuanto mira un bloque de las casillas contiguas 
+    int NumeroInfluenciaCasillasLaterales = 3; // cada cuanto mira un bloque de las casillas contiguas 
 
 
     // Generar mapa
@@ -396,8 +392,9 @@ int main()
     //Matriz Mapa = CreaUnaCasillaPersonalizada(ancho, alto, seed); // modificar funcion para annadir los deseados 
     Matriz Mapa = CrearMapaRandom(NumeroInfluenciaCasillasLaterales, NumeroCasillasHorizonotales, NumeroCasillasVerticales, ancho, alto, seed, MaximoPuntosPrincipales);
 
+
     // Filtro suavizador (cuando hay mucha diferencia reduce la distancia) Leer especificaciones de la funcion
-    filtroReducirPorDiferencias(Mapa, 4, 0.15, 500); // reducir picos
+    filtroReducirPorDiferencias(Mapa, 2, 0.05, 1000); // reducir picos
 
 
     // Representacion
