@@ -117,4 +117,10 @@ Dado que el algoritmo puede generar picos muy pronunciados, se aplica un filtro 
 Este filtro permite reducir y normalizar los picos, tanto positivos como negativos, obteniendo un mapa más uniforme y realista.
 
 # Ejemplos
-Seguidamente, se presentarán algunos ejemplos con la configuración utilizada, junto con dos imágenes: una del mapa de calor y otra de la representación en 3D. En ambas, la imagen de la izquierda muestra el original, mientras que la de la derecha incluye el filtro aplicado. Además, se proporcionarán ejemplos de posibles aplicaciones.
+A continuación, se presentan ejemplos de configuración y resultados obtenidos con este sistema. Se incluyen:
+
+- **Configuración utilizada**: Se detallan los parámetros aplicados para generar los mapas.
+- **Mapas de calor**: Se muestran dos imágenes, una con el mapa original y otra con el resultado tras aplicar el filtro de suavizado.
+- **Representaciones en 3D**: Se presentan dos imágenes en 3D, donde la izquierda muestra el mapa sin filtro y la derecha el resultado filtrado.
+
+Estos ejemplos permiten visualizar las diferencias entre las configuraciones aplicadas y muestran posibles usos del sistema en la generación de terrenos o estructuras visuales.
