@@ -117,6 +117,7 @@ double sumarVector(vector<double> &V) {
     }
     return result;
 }
+// Invierte todos los valores del vector
 vector<double> inversorV(vector<int> &V) {
     int n = V.size();
     
@@ -150,6 +151,7 @@ double valorDeUnPunto(int x, int y, Matriz &M, vector<Punto> &P) {
     
     return result;
 }
+// Sirve para hacer debugg de los principales
 void debugPuntosPrincipales(Matriz &M,vector<Punto> &PuntosImpor ) {
     int numPuntos = PuntosImpor.size();
     // Debug posicon de los puntos importantes
@@ -315,11 +317,42 @@ Matriz CrearMapaRandom(int NumeroInfluenciaCasillasLaterales, int casillasHorizo
 
     return Mapa;
 }
+// Devuleve la media de los valores al rededor de el punto 
+double calculaMediaAlRededor(Matriz &M, int i, int j) {
+    int f = M.size();
+    int c = M[0].size();
+
+    double result = 0;
+    int numValores = 0;
+
+    for (int a = i - 1; a < i + 1; ++a) {
+        for (int b = j - 1; b < j + 1; ++b) {
+            if (a >= 0 && b >= 0 && a < f && b < c && (a != i || b != j)) {
+                ++ numValores;
+                result += M[a][b];
+            }
+        }
+    }
+
+    return result / numValores;
+}
+// Asigna el valor segun el factor de reduccion
+double asignarValorSegunReduccion(double val, double avg, int factorReductor) {
+    double result = avg;
+
+    for (int i = 0; i < factorReductor; ++i) {
+        result += val;
+    }
+
+    result /= (factorReductor + 1);
+
+    return result;
+}
 // Analiza todos los valores contiguos y resta/suma la diferencia entre el factorReductor para aproximarlos
-// factorReductor = se resta a cada casilla, diferencia/factorReductor, Cuanto mas grande es menos le resta 
+// factorReductor = cuanta importancia tiene el pico al calcular su nuevo valor; cuanto mas mas importancia
 // diffMax = es la diferencia maxima apartir de la cual se aplica el filtro
-// vueltasDeSuavizado = cuantas vuletas minimo hace de suavizar todo 
-void filtroReducirPorDiferencias(Matriz &M, float factorReductor, float diffMax, int vueltasDeSuavizado) {
+// vueltasDeSuavizado = cuantas vuletas maximo hace de suavizar 
+void filtroReducirPorDiferencias(Matriz &M, int factorReductor, float diffMax, int vueltasDeSuavizado) {
     int f = M.size();
     int c = M[0].size();
 
@@ -329,38 +362,15 @@ void filtroReducirPorDiferencias(Matriz &M, float factorReductor, float diffMax,
         minimoUnCanvio = false;
         for (int i = 0; i < f; ++i) {
             for (int j = 0; j < c; ++j) {           
-                if (i < (f - 1))  {
-                    double difi = abs(M[i][j] - M[i + 1][j]);
-                    if (difi > diffMax) {
-                        if (M[i][j] < M[i + 1][j]) {
-                            M[i][j] += difi / factorReductor;
-                            M[i + 1][j] -= difi / factorReductor;
-                        }
-                        else {
-                            M[i][j] -= difi / factorReductor;
-                            M[i + 1][j] += difi / factorReductor;
-                        }
-                        minimoUnCanvio = true;
-                    }   
-                }
-                if (j < (c - 1) )  {
-                    double difj = abs(M[i][j] - M[i][j + 1]);
-                    if (difj > diffMax) {
-                        if (M[i][j] < M[i][j + 1]) {
-                            M[i][j] += difj / factorReductor;
-                            M[i][j + 1] -= difj / factorReductor;
-                        }
-                        else {
-                            M[i][j] -= difj / factorReductor;
-                            M[i][j + 1] += difj / factorReductor;
-                        }
-                        minimoUnCanvio = true;
-                    }
+                double avg = calculaMediaAlRededor(M, i, j);
+                if (abs(M[i][j] - avg) >= diffMax) {
+                    M[i][j] = asignarValorSegunReduccion(M[i][j], avg, factorReductor);
+                    minimoUnCanvio = true;
                 }
             }
         }
         --vueltasDeSuavizado;
-    } while ((minimoUnCanvio != 0) && vueltasDeSuavizado > 0);  
+    } while (minimoUnCanvio && vueltasDeSuavizado > 0);  
 }
 
 
@@ -374,7 +384,7 @@ int main()
     int ancho = 15; 
     int alto = 15;
     int MaximoPuntosPrincipales = 4;
-    int seed = 245243124; // preferiblemente grande
+    int seed = time(0); // preferiblemente grande
     // solo para cuando creas un mapa con varias casillas
     int NumeroCasillasHorizonotales = 3; 
     int NumeroCasillasVerticales = 3;
@@ -386,8 +396,8 @@ int main()
     //Matriz Mapa = CreaUnaCasillaPersonalizada(ancho, alto, seed); // modificar funcion para annadir los deseados 
     Matriz Mapa = CrearMapaRandom(NumeroInfluenciaCasillasLaterales, NumeroCasillasHorizonotales, NumeroCasillasVerticales, ancho, alto, seed, MaximoPuntosPrincipales);
 
-    // Filtro suavizador (cuando hay mucha diferencia reduce la distancia)
-    filtroReducirPorDiferencias(Mapa, 2, 0.15, 200);
+    // Filtro suavizador (cuando hay mucha diferencia reduce la distancia) Leer especificaciones de la funcion
+    filtroReducirPorDiferencias(Mapa, 4, 0.15, 500); // reducir picos
 
 
     // Representacion
