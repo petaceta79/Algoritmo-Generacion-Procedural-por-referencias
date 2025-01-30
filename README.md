@@ -116,5 +116,4 @@ Dado que el algoritmo puede generar picos muy pronunciados, se aplica un filtro 
 
 Este filtro permite reducir y normalizar los picos, tanto positivos como negativos, obteniendo un mapa más uniforme y realista.
 
----
-
+# Ejemplos
