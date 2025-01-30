@@ -124,3 +124,20 @@ A continuación, se presentan ejemplos de configuración y resultados obtenidos 
 - **Representaciones en 3D**: Se presentan dos imágenes en 3D, donde la izquierda muestra el mapa sin filtro y la derecha el resultado filtrado.
 
 Estos ejemplos permiten visualizar las diferencias entre las configuraciones aplicadas y muestran posibles usos del sistema en la generación de terrenos o estructuras visuales.
+
+### Terreno Montañoso Normal
+
+Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
+
+- **Número de Influencia de Casillas Laterales:** 3  
+- **Casillas Horizontales:** 3  
+- **Casillas Verticales:** 3  
+- **Ancho de Casilla:** 10  
+- **Alto de Casilla:** 10  
+- **Seed:** 86756767  
+- **Puntos Principales Máximos:** 4  
+
+#### Parámetros del Filtro  
+- **Factor Reductor:** 2  
+- **Diferencia Máxima:** 0.05  
+- **Vueltas de Suavizado:** 1000  
