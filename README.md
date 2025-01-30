@@ -146,4 +146,23 @@ Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
 
 <img src="ejemplos/(30x30)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(30x30)a(ConFiltro)3D.png" width="400" height="400"/>
 
+### Colina Cotidiana
 
+Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
+
+- **Número de Influencia de Casillas Laterales:** 1  
+- **Casillas Horizontales:** 2  
+- **Casillas Verticales:** 2  
+- **Ancho de Casilla:** 5  
+- **Alto de Casilla:** 5  
+- **Seed:** 85687674  
+- **Puntos Principales Máximos:** 6  
+
+#### Parámetros del Filtro  
+- **Factor Reductor:** 2  
+- **Diferencia Máxima:** 0.05  
+- **Vueltas de Suavizado:** 1000  
+
+<img src="ejemplos/(10x10)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(10x10)a(ConFiltro)Calor.png" width="300" height="300"/>
+
+<img src="ejemplos/(10x10)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(10x10)a(ConFiltro)3D.png" width="400" height="400"/>
