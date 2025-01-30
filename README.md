@@ -125,6 +125,8 @@ A continuación, se presentan ejemplos de configuración y resultados obtenidos 
 
 Estos ejemplos permiten visualizar las diferencias entre las configuraciones aplicadas y muestran posibles usos del sistema en la generación de terrenos o estructuras visuales.
 
+---
+
 ### Terreno Montañoso Normal
 
 Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
@@ -145,6 +147,8 @@ Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
 <img src="ejemplos/(30x30)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(30x30)a(ConFiltro)Calor.png" width="300" height="300"/>
 
 <img src="ejemplos/(30x30)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(30x30)a(ConFiltro)3D.png" width="400" height="400"/>
+
+---
 
 ### Colina Cotidiana
 
