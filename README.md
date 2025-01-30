@@ -141,3 +141,7 @@ Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
 - **Factor Reductor:** 2  
 - **Diferencia Máxima:** 0.05  
 - **Vueltas de Suavizado:** 1000  
+
+<img src="ejemplos/(30x30)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(30x30)a(ConFiltro)Calor.png" width="300" height="300"/>
+
+<img src="ejemplos/(30x30)a(SinFiltro)3D.png" width="300" height="300"/> <img src="ejemplos/(30x30)a(ConFiltro)3D.png" width="300" height="300"/>
