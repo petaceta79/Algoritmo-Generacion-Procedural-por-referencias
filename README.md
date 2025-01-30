@@ -117,3 +117,4 @@ Dado que el algoritmo puede generar picos muy pronunciados, se aplica un filtro 
 Este filtro permite reducir y normalizar los picos, tanto positivos como negativos, obteniendo un mapa más uniforme y realista.
 
 # Ejemplos
+Seguidamente, se presentarán algunos ejemplos con la configuración utilizada, junto con dos imágenes: una del mapa de calor y otra de la representación en 3D. En ambas, la imagen de la izquierda muestra el original, mientras que la de la derecha incluye el filtro aplicado. Además, se proporcionarán ejemplos de posibles aplicaciones.
