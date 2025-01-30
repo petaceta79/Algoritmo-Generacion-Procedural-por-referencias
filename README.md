@@ -118,5 +118,3 @@ Este filtro permite reducir y normalizar los picos, tanto positivos como negativ
 
 ---
 
-## Conclusión
-Este sistema permite generar mapas aleatorios con gran flexibilidad y personalización. Mediante la combinación de estas funciones y el ajuste de parámetros, se pueden obtener resultados variados y adecuados a diferentes necesidades.
