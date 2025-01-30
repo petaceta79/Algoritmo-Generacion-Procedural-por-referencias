@@ -35,6 +35,10 @@ La asignación de los puntos principales es clave. Estos puntos pueden ser asign
 
 El código genera un mapa de calor en formato `.ppm`, lo que permite visualizar los resultados de forma clara. Además, gracias al script Python `Viewer3D.py`, es posible generar la representación 3D de la imagen `.ppm` (por ejemplo, `MapaDeCalor.ppm`).
 
+## Generación de mapa 3D
+
+Es un script con Python que, gracias a librerías como Matplotlib, crea una representación 3D del mapa de calor de la imagen .ppm, en los ejemplos se observa.
+
 ## Ejemplos
 
 El algoritmo funciona de manera más eficiente en cuadrículas de pequeño tamaño. Algunos ejemplos de la representación 3D generada en cuadrículas de tamaño 100x100 y 20x20:
