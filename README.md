@@ -170,3 +170,23 @@ Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
 <img src="ejemplos/(10x10)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(10x10)a(ConFiltro)Calor.png" width="300" height="300"/>
 
 <img src="ejemplos/(10x10)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(10x10)a(ConFiltro)3D.png" width="400" height="400"/>
+
+---
+
+### Dos Montañas y Algunos Hoyos
+
+Se ha utilizado `CrearUnaCasillaRandom` con los siguientes parámetros:
+
+- **Ancho:** 50  
+- **Alto:** 50  
+- **Seed:** 446776  
+- **Puntos Principales Máximos:** 10  
+
+#### Parámetros del Filtro  
+- **Factor Reductor:** 4  
+- **Diferencia Máxima:** 0.05  
+- **Vueltas de Suavizado:** 100000  
+
+<img src="ejemplos/(50x50)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(50x50)a(ConFiltro)Calor.png" width="300" height="300"/>
+
+<img src="ejemplos/(50x50)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(50x50)a(ConFiltro)3D.png" width="400" height="400"/>
