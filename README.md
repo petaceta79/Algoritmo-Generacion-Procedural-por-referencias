@@ -41,19 +41,82 @@ El código genera un mapa de calor en formato `.ppm`, lo que permite visualizar 
 
 Es un script con Python que, gracias a librerías como Matplotlib, crea una representación 3D del mapa de calor de la imagen .ppm, en los ejemplos se observa.
 
-## Ejemplos
+# Generador de Mapas
 
-El algoritmo funciona de manera más eficiente en cuadrículas de pequeño tamaño. Algunos ejemplos de la representación 3D generada en cuadrículas de tamaño 100x100 y 20x20:
+Este proyecto permite generar mapas utilizando funciones personalizables que aplican algoritmos basados en números pseudoaleatorios.
 
-<img src="ejemplos/3D(100x100)1.png" width="400" height="400"/> <img src="ejemplos/3D(20x20).png" width="400" height="400"/>
+## Funciones Principales
 
-Se observa que el algoritmo es más fluido en comparación con los generados aleatoriamente:
+### 1. `CrearUnaCasillaRandom`
+Esta función genera una casilla con valores aleatorios según una semilla. Permite configurar los siguientes parámetros:
 
-<img src="ejemplos/Random1.png" width="400" height="400"/> <img src="ejemplos/Random2.png" width="400" height="400"/>
+```plaintext
+- ancho: Número de píxeles por casilla horizontalmente.
+- alto: Número de píxeles por casilla verticalmente.
+- seed: Semilla pseudoaleatoria utilizada para generar los números aleatorios.
+- MaximoPuntosPrincipales: Número máximo de puntos principales (mínimo 2).
+```
 
-Así se ven los mapas de calor:
+#### Funcionamiento
+A partir de la semilla (`seed`), se genera una secuencia de números pseudoaleatorios para determinar cuántos puntos principales hay. Se asigna a cada uno un valor entre `[0,1]` y se colocan aleatoriamente en la casilla. Posteriormente, se aplica el algoritmo de generación y se devuelve la matriz resultante.
 
-<img src="ejemplos/MapaDeCalor(50x50)2.png" width="400" height="400"/> <img src="ejemplos/MapaDeCalor(250x250)1.png" width="400" height="400"/>
+---
 
-# Como utilizarlo 
-En poco
+### 2. `CreaUnaCasillaPersonalizada`
+Esta función permite personalizar la ubicación y el valor de los puntos principales dentro de la casilla. Sus parámetros son:
+
+```plaintext
+- ancho: Número de píxeles por casilla horizontalmente.
+- alto: Número de píxeles por casilla verticalmente.
+- seed: Semilla pseudoaleatoria para la generación de números aleatorios.
+```
+
+#### Funcionamiento
+Es similar a `CrearUnaCasillaRandom`, pero dentro del código se permite especificar manualmente la cantidad, posición y valor de los puntos principales. Esto facilita la experimentación y la creación de patrones específicos.
+
+---
+
+### 3. `CrearMapaRandom`
+Esta función genera un mapa completo compuesto por múltiples casillas, asegurando continuidad entre ellas. Parámetros configurables:
+
+```plaintext
+- NumeroInfluenciaCasillasLaterales: Controla cuántos valores se heredan de casillas anteriores para garantizar continuidad.
+- casillasHorizon: Número de casillas en sentido horizontal.
+- casillasVertical: Número de casillas en sentido vertical.
+- anchoCasilla: Ancho de cada casilla en píxeles.
+- altoCasilla: Alto de cada casilla en píxeles.
+- seed: Semilla inicial para la generación de números pseudoaleatorios.
+- PuntosPrinciMax: Máximo de puntos principales sin contar los añadidos para continuidad.
+```
+
+#### Funcionamiento
+Cada casilla se genera como en `CrearUnaCasillaRandom`, pero además, se añaden puntos de las casillas adyacentes según el parámetro `NumeroInfluenciaCasillasLaterales`. Cuanto menor sea este valor, más puntos se heredan de casillas contiguas, mejorando la continuidad del mapa. 
+
+El proceso se repite hasta completar la matriz final.
+
+---
+
+## Filtro de Suavizado: `filtroReducirPorDiferencias`
+Dado que el algoritmo puede generar picos muy pronunciados, se aplica un filtro para suavizarlos. Se pueden configurar los siguientes parámetros:
+
+```plaintext
+- factorReductor: Controla cuánto peso tiene el valor original en el cálculo del nuevo valor (a mayor valor, más importancia tiene el pico original).
+- diffMax: Diferencia máxima a partir de la cual se aplica el filtro.
+- vueltasDeSuavizado: Número máximo de iteraciones de suavizado.
+```
+
+### Funcionamiento
+1. Se calcula el valor promedio (`avg`) de las casillas adyacentes.
+2. Si la diferencia entre el valor de la casilla y `avg` supera `diffMax`, se ajusta el valor siguiendo la fórmula:
+   
+   ```plaintext
+   Valor = (avg + valorDeLaCasilla * factorReductor) / (factorReductor + 1)
+   ```
+3. Este proceso se repite hasta el número de iteraciones indicado en `vueltasDeSuavizado`.
+
+Este filtro permite reducir y normalizar los picos, tanto positivos como negativos, obteniendo un mapa más uniforme y realista.
+
+---
+
+## Conclusión
+Este sistema permite generar mapas aleatorios con gran flexibilidad y personalización. Mediante la combinación de estas funciones y el ajuste de parámetros, se pueden obtener resultados variados y adecuados a diferentes necesidades.
