@@ -31,6 +31,8 @@ El algoritmo se ejecuta en un espacio bidimensional, donde se posicionan varios 
 
 La asignación de los puntos principales es clave. Estos puntos pueden ser asignados manualmente o mediante un sistema automatizado. En este caso, se utiliza un sistema basado en semillas, donde a partir de un número dado, se calcula cuántos puntos añadir, así como sus valores y posiciones.
 
+Esto se consigue gracias a una función que, dada una semilla, a través de una serie de operaciones y productos modulares, se obtiene otro número pseudoaleatorio.
+
 ## Generación del mapa de calor
 
 El código genera un mapa de calor en formato `.ppm`, lo que permite visualizar los resultados de forma clara. Además, gracias al script Python `Viewer3D.py`, es posible generar la representación 3D de la imagen `.ppm` (por ejemplo, `MapaDeCalor.ppm`).
