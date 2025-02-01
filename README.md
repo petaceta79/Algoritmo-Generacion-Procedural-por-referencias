@@ -190,3 +190,26 @@ Se ha utilizado `CrearUnaCasillaRandom` con los siguientes parámetros:
 <img src="ejemplos/(50x50)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(50x50)a(ConFiltro)Calor.png" width="300" height="300"/>
 
 <img src="ejemplos/(50x50)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(50x50)a(ConFiltro)3D.png" width="400" height="400"/>
+
+---
+
+### Mapa Montañoso más grande
+
+Se ha utilizado `crearMapaRandom` con los siguientes parámetros:
+
+- **Número de Influencia de Casillas Laterales:** 3  
+- **Casillas Horizontales:** 5  
+- **Casillas Verticales:** 5  
+- **Ancho de Casilla:** 20  
+- **Alto de Casilla:** 20  
+- **Seed:** 566346346  
+- **Puntos Principales Máximos:** 4  
+
+#### Parámetros del Filtro  
+- **Factor Reductor:** 5  
+- **Diferencia Máxima:** 0.05  
+- **Vueltas de Suavizado:** 100000  
+
+<img src="ejemplos/(100x100)a(SinFiltro)Calor.png" width="300" height="300"/> <img src="ejemplos/(100x100)a(ConFiltro)Calor.png" width="300" height="300"/>
+
+<img src="ejemplos/(100x100)a(SinFiltro)3D.png" width="400" height="400"/> <img src="ejemplos/(100x100)a(ConFiltro)3D.png" width="400" height="400"/>
